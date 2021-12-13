@@ -2,12 +2,13 @@
 # For review of Bartlett et al.
 # Analysis by Lewis J Bartlett
 # lewis.bartlett@uga.edu
+# https://scholar.google.com/citations?user=PV5ca5UAAAAJ&hl=en
 
 ####
 
 # Read in data
 
-DD <- 'D:/Google Drive/PostDoc2/BroodMix/Empirical Paper/Datasets/Cleaned/'
+DD <- paste0(as.character(getwd()),'/Cleaned/')
 
 DFs <- list.files(path = DD,
                   pattern = NULL, all.files = FALSE,
@@ -29,13 +30,6 @@ for(DF in DFs){
 
 rm(list = c('DD','DF','DFs'))
 
-SimData <- read.csv(file = 'D:/Google Drive/PostDoc2/BroodMix/Empirical Paper/Datasets/PolyMaxPredictions/SimData.csv',
-                     header = T)
-
-#SimData <- read.csv(file = 'C:/Users/ljb87745/Google Drive/PostDoc2/BroodMix/Empirical Paper/Datasets/PolyMaxPredictions/SimData.csv',
-#                    header = T)
-
-SimData$Emphasis <- SimData$Emphasis/max(SimData$Emphasis)
 
 # Data loaded and ready for arrangement for analysis
 
@@ -222,19 +216,7 @@ for(N in 1:NROW(MWDF)){
   MWDF$Neonic[N] <- TreatRefAll$Neonic[which(TreatRefAll$Colony == MWDF$Colony[N] & TreatRefAll$Site == MWDF$Site[N])]
   
   MWDF$Mix[N] <- TreatRefAll$Mixed[which(TreatRefAll$Colony == MWDF$Colony[N] & TreatRefAll$Site == MWDF$Site[N])]
-  
-  if(!is.na(MWDF$Mix[N])){
-    if(MWDF$Mix[N] == 1){
-      
-      if(MWDF$Day[N] > 60){
-        MWDF$MixEmph[N] <- 0
-      }else{
-        
-        MWDF$MixEmph[N] <- SimData$Emphasis[which(SimData$Colony == MWDF$Colony[N] & SimData$Day == MWDF$Day[N] & SimData$State == MWDF$Site[N] & SimData$Task == 'Guard')]
-      }
-    }
-  }
-  
+
   MWDF$UID <- paste0(MWDF$Site, MWDF$Colony)
   MWDF$SD <- paste0(MWDF$Site, MWDF$Day)
   
@@ -570,6 +552,8 @@ for(L in 1:NROW(PlotCIs)){
   
 }
 
+
+### Done. ontact: lewis.bartlett@uga.edu // https://scholar.google.com/citations?user=PV5ca5UAAAAJ&hl=en
 
 
 
